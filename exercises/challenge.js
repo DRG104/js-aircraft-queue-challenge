@@ -46,15 +46,36 @@ const ATCQueue = function () {
 }
 
 ATCQueue.prototype.aircraftCount = function () {
-
+    return this.aircraftQueue.length
 }
 
 ATCQueue.prototype.enqueue = function (aircraft) {
-
+    return this.aircraftQueue.push(aircraft)
 }
 
 ATCQueue.prototype.dequeue = function () {
-    
+
+    const queue = this.aircraftQueue
+
+    const largePassenger = queue.find(aircraft => {
+        return aircraft.type === 'passenger' && aircraft.size === 'large'
+    })
+    const smallPassenger = queue.find(aircraft => {
+        return aircraft.type === 'passenger' && aircraft.size === 'small'
+    })
+    const largeCargo = queue.find(aircraft => {
+        return aircraft.type === 'cargo' && aircraft.size === 'large'
+    })
+    const smallCargo = queue.find(aircraft => {
+        return aircraft.type === 'cargo' && aircraft.size === 'small'
+    })
+
+    const priority = largePassenger || smallPassenger || largeCargo || smallCargo
+
+    queue.splice(queue.indexOf(priority), 1)
+
+    console.log(priority)
+    return priority
 }
 
 // DO NOT MODIFY
